@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NDMC Ticket System</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    select, input, button { margin: 10px 0; padding: 8px; }
+  </style>
+</head>
+<body>
+  <h2>NDMC Ticket System</h2>
+
+  <form id="ticketForm">
+    <label for="category">Select Category:</label><br>
+    <select id="category" required></select>
+    <br><br>
+
+    <label for="issue">Issue Description:</label><br>
+    <input type="text" id="issue" placeholder="Enter issue details" required>
+    <br><br>
+
+    <button type="submit">Create Ticket</button>
+  </form>
+
+  <hr>
+  <p id="ticketInfo"></p>
+
+  <script>
+    // Default counters
+    const defaultTickets = {
+      ndmc_alarm: 612,
+      ndmc_cctv: 453,
+      ndmc_tele: 765
+    };
+
+    // Load from localStorage or use default
+    let counters = JSON.parse(localStorage.getItem("ticketCounters")) || defaultTickets;
+    localStorage.setItem("ticketCounters", JSON.stringify(counters));
+
+    const select = document.getElementById("category");
+
+    // Function to render dropdown options
+    function renderCategoryOptions() {
+      select.innerHTML = `<option value="">--Select--</option>`;
+      for (const [key, value] of Object.entries(counters)) {
+        const label = key.replace("ndmc_", "NDMC ").toUpperCase();
+        select.innerHTML += `<option value="${key}">${label} - ${value + 1}</option>`;
+      }
+    }
+
+    renderCategoryOptions();
+
+    // Handle form submission
+    document.getElementById("ticketForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const category = select.value;
+      const issue = document.getElementById("issue").value.trim();
+
+      if (!category || !issue) {
+        alert("Please select a category and enter issue details!");
+        return;
+      }
+
+      // Load counters again
+      counters = JSON.parse(localStorage.getItem("ticketCounters"));
+
+      // Generate and increment
+      const ticketNumber = counters[category] + 1;
+      counters[category] = ticketNumber;
+
+      // Save updated counters
+      localStorage.setItem("ticketCounters", JSON.stringify(counters));
+
+      // Save ticket info
+      const ticket = {
+        id: `${category.toUpperCase()}-${ticketNumber}`,
+        category,
+        issue,
+        time: new Date().toLocaleString()
+      };
+
+      let allTickets = JSON.parse(localStorage.getItem("tickets") || "[]");
+      allTickets.push(ticket);
+    //   localStorage.setItem("tickets", JSON.stringify(allTickets));
+
+      // Show confirmation
+      document.getElementById("ticketInfo").innerHTML = `
+        ✅ Ticket Created!<br>
+        <b>ID:</b> ${ticket.id}<br>
+        <b>Category:</b> ${ticket.category}<br>
+        <b>Issue:</b> ${ticket.issue}<br>
+        <b>Time:</b> ${ticket.time}
+      `;
+
+      // Refresh dropdown to show updated numbers
+      renderCategoryOptions();
+
+      // Clear form
+      document.getElementById("ticketForm").reset();
+    });
+  </script>
+</body>
+</html>

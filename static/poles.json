@@ -1,0 +1,479 @@
+[
+  {
+    "id": 1,
+    "indus_id":"IN-1337025",
+    "pole_no": 1,
+    "name": "Pole no. 138 Janpath Road Opp. Shangri La Hotel",
+    "latitude": 28.62052501711949, 
+    "longitude": 77.21886062465771,
+    "site": "3-1"
+  },
+  {
+    "id": 2,
+    "indus_id":"IN-1340114",
+    "pole_no": 2,
+    "name": "Pole_53 barakhmbha marg",
+    "latitude": 28.625907,
+    "longitude": 77.231408,
+    "site": "3-16"
+  },
+  {
+    "id": 3,
+    "indus_id":"IN-1337031",
+    "pole_no": 3,
+    "name": "Near Shop No. 8, Janpath Road Janpath Mini Market",
+    "latitude": 28.62897,
+    "longitude": 77.219576,
+    "site": "3-5"
+  },
+  {
+    "id": 4,
+    "indus_id":"IN-1337027",
+    "pole_no": 4,
+    "name": "Pole no. 160 Janpath Road Near Janpath Metro Gate",
+    "latitude": 28.624469,
+    "longitude": 77.219062,
+    "site": "3-3"
+  },
+  {
+    "id": 5,
+    "indus_id":"IN-1339853",
+    "pole_no": 5,
+    "name": "opposite mehra sons jwellars janpath road",
+    "latitude": 28.62784,
+    "longitude": 77.219492,
+    "site": "3-4"
+  },
+  {
+    "id": 6,
+    "indus_id":"IN-1337030",
+    "pole_no": 6,
+    "name": "Pole no. 190 Janpath Road Near Rolex Showroom",
+    "latitude": 28.629962,
+    "longitude": 77.219676,
+    "site": "3-6"
+  },
+  {
+    "id": 7,
+    "indus_id":"IN-1339896",
+    "pole_no": 7,
+    "name": "Pole no 94 KG marg",
+    "latitude": 28.628168,
+    "longitude": 77.222157,
+    "site": "3-8"
+  },
+  {
+    "id": 8,
+    "indus_id":"IN-1340614",
+    "pole_no": 8,
+    "name": "Pole  No 100  KG marg",
+    "latitude": 28.629579,
+    "longitude": 77.221652,
+    "site": "3-7"
+  },
+  {
+    "id": 9,
+    "indus_id":"IN-1337020",
+    "pole_no": 9,
+    "name": "Pole no. 50 BKS Marg Near Capitol Point",
+    "latitude": 28.6298947712516,
+    "longitude":  77.21346996489041,
+    "site": "2-3"
+  },
+  {
+    "id": 10,
+    "indus_id":"IN-1340608",
+    "pole_no": 10,
+    "name": "Arunanchal Building  Barakhmba Road",
+    "latitude": 28.629552,
+    "longitude": 77.225013,
+    "site": "2-10"
+  },
+  {
+    "id": 11,
+    "indus_id":"IN-1336309",
+    "pole_no": 11,
+    "name": "Opp Charkha Museum",
+    "latitude": 28.631661,
+    "longitude": 77.221578,
+    "site": "1-18"
+  },
+  {
+    "id": 12,
+    "indus_id":"IN-1339902",
+    "pole_no": 12,
+    "name": "Pole no 16 opp. Amardeep building  Tolstoy marg",
+    "latitude": 28.627271,
+    "longitude": 77.224595,
+    "site": "2-12"
+  },
+  {
+    "id": 13,
+    "indus_id":"IN-1337024",
+    "pole_no": 13,
+    "name": "Pole no. 18 BKS Marg Inside Gole Dak Khana Circle",
+    "latitude": 28.627430896314014, 
+    "longitude":77.20751538851374,
+    "site": "2-6"
+  },
+  {
+    "id": 14,
+    "indus_id":"IN-1339903",
+    "pole_no": 14,
+    "name": "Pole 68 JANPATH LANE   Tolstoy marg",
+    "latitude": 28.626262,
+    "longitude": 77.217471,
+    "site": "2-14"
+  },
+  {
+    "id": 15,
+    "indus_id":"IN-1340607",
+    "pole_no": 15,
+    "name": "Pole  No-13  BarakhambaRoad",
+    "latitude": 28.630153,
+    "longitude": 77.223934,
+    "site": "2-9"
+  },
+  {
+    "id": 16,
+    "indus_id":"IN-1337021",
+    "pole_no": 16,
+    "name": "Pole no. 48 BKS Marg Near IOC Petrol Pump",
+    "latitude": 28.629328,
+    "longitude": 77.212388,
+    "site": "2-4"
+  },
+  {
+    "id": 17,
+    "indus_id":"IN-1339904",
+    "pole_no": 17,
+    "name": "Pole no 30  kasturba gandhi marg",
+    "latitude": 28.623054,
+    "longitude": 77.225431,
+    "site": "3-13"
+  },
+  {
+    "id": 18,
+    "indus_id":"IN-1341485",
+    "pole_no": 18,
+    "name": "Near PVR rivoli BKS Road",
+    "latitude": 28.631055,
+    "longitude": 77.216095,
+    "site": "2-1"
+  },
+  {
+    "id": 19,
+    "indus_id":"IN-1340307",
+    "pole_no": 19,
+    "name": "Pole  No-37 Near YWCA",
+    "latitude": 28.625547,
+    "longitude": 77.214384,
+    "site": "2-16"
+  },
+  {
+    "id": 20,
+    "indus_id":"IN-1340612",
+    "pole_no": 20,
+    "name": "Jantar Mantar Gate",
+    "latitude": 28.628235,
+    "longitude": 77.21644,
+    "site": "1-1"
+  },
+  {
+    "id": 21,
+    "indus_id":"IN-1340109",
+    "pole_no": 21,
+    "name": "opposit jantar mantar marg tolstay marg",
+    "latitude": 28.625986,
+    "longitude": 77.215939,
+    "site": "2-15"
+  },
+  {
+    "id": 22,
+    "indus_id":"IN-1340113",
+    "pole_no": 22,
+    "name": "nilgiri aap. barakhambha marg",
+    "latitude": 28.628245,
+    "longitude": 77.227404,
+    "site": "3-14"
+  },
+  {
+    "id": 23,
+    "indus_id":"IN-1339900",
+    "pole_no": 23,
+    "name": "pole no 70 kasturba gandhi marg",
+    "latitude": 28.624759,
+    "longitude": 77.224421,
+    "site": "3-11"
+  },
+  {
+    "id": 24,
+    "indus_id":"IN-1341886",
+    "pole_no": 24,
+    "name": "pole no 7 Barakhamba road",
+    "latitude": 28.630535,
+    "longitude": 77.223281,
+    "site": "2-8"
+  },
+  {
+    "id": 25,
+    "indus_id":"IN-1340888",
+    "pole_no": 25,
+    "name": "Pole No 21 Near Madras Hotel",
+    "latitude": 28.632793,
+    "longitude": 77.216298,
+    "site": "2-7"
+  },
+  {
+    "id": 26,
+    "indus_id":"IN-1339897",
+    "pole_no": 26,
+    "name": "Pole no 90 KG Marg",
+    "latitude": 28.627398,
+    "longitude": 77.222973,
+    "site": "3-9"
+  },
+  {
+    "id": 27,
+    "indus_id":"IN-1339898",
+    "pole_no": 27,
+    "name": "Pole no 76 KG marg",
+    "latitude": 28.625685,
+    "longitude": 77.223682,
+    "site": "3-10"
+  },
+  {
+    "id": 28,
+    "indus_id":"IN-1334368",
+    "pole_no": 28,
+    "name": "Pole no 14 inner Circle",
+    "latitude": 28.633906974163214,
+    "longitude": 77.21976631473363,
+    "site": "1-15"
+  },
+  {
+    "id": 29,
+    "indus_id":"IN-1336314",
+    "pole_no": 29,
+    "name": "Pole no. 3 Middle Circle Opp. Odeon",
+    "latitude": 28.634534875189505,
+    "longitude": 77.22094496521703,
+    "site": "1-7"
+  },
+  {
+    "id": 30,
+    "indus_id":"IN-1336307",
+    "pole_no": 30,
+    "name": "Pole no. 3 Middle Circle Opp. Pallika Bazar Gate N",
+    "latitude": 28.630763830402028,
+    "longitude": 77.2196819746923,
+    "site": "1-4"
+  },
+  {
+    "id": 31,
+    "indus_id":"IN-1334363",
+    "pole_no": 31,
+    "name": "Pole no 20 inner circle",
+    "latitude": 28.632157542327402,
+    "longitude": 77.2207503780006,
+    "site": "1-10"
+  },
+  {
+    "id": 32,
+    "indus_id":"IN-1334365",
+    "pole_no": 32,
+    "name": "pole no. 17 inner circle",
+    "latitude": 28.633282504908042,
+    "longitude": 77.22081577099668,
+    "site": "1-9"
+  },
+  {
+    "id": 33,
+    "indus_id":"IN-1340308",
+    "pole_no": 33,
+    "name": "Pole  No-51  ,Opposite   Sardar  Patel  Bhavan",
+    "latitude": 28.62396191390551,
+    "longitude": 77.21324914030528,
+    "site": "2-17"
+  },
+  {
+    "id": 34,
+    "indus_id":"IN-1340613",
+    "pole_no": 34,
+    "name": "Opposite  Kwality Restaurent",
+    "latitude": 28.62950204416695,
+    "longitude": 77.21742029469658,
+    "site": "1-2"
+  },
+  {
+    "id": 35,
+    "indus_id":"IN-1340609",
+    "pole_no": 35,
+    "name": "Opposite  Jeevan  Bharti  Building",
+    "latitude": 28.630094689196422,
+    "longitude": 77.21821394965434,
+    "site": "1-3"
+  },
+  {
+    "id": 36,
+    "indus_id":"IN-1336313",
+    "pole_no": 36,
+    "name": "Opp NDMC Site Office",
+    "latitude": 28.631725478769432,
+    "longitude": 77.21718772891113,
+    "site": "1-5"
+  },
+  {
+    "id": 37,
+    "indus_id":"IN-1336305",
+    "pole_no": 37,
+    "name": "Pole no. 3 Inner Circle",
+    "latitude": 28.631562208651633,
+    "longitude": 77.21960333877945,
+    "site": "1-11"
+  },
+  {
+    "id": 38,
+    "indus_id":"IN-1334360",
+    "pole_no": 38,
+    "name": "Pole no 6 Inner circle",
+    "latitude": 28.632163482370995, 
+    "longitude": 77.21862775055105,
+    "site": "1-13"
+  },
+  {
+    "id": 39,
+    "indus_id":"IN-1334370",
+    "pole_no": 39,
+    "name": "Pole no.10 Inner circle",
+    "latitude": 28.63330804887719,
+    "longitude": 77.21860879812309,
+    "site": "1-14"
+  },
+  {
+    "id": 40,
+    "indus_id":"IN-1336311",
+    "pole_no": 40,
+    "name": "Pole no. 3 Middle Circle Opp. PVR Plaza",
+    "latitude": 28.63480666733599,
+    "longitude": 77.2197573605654,
+    "site": "1-16"
+  },
+  {
+    "id": 41,
+    "indus_id":"IN-1336312",
+    "pole_no": 41,
+    "name": "Pole no. 3 Middle Circle Opp. Indian Oil Petrol pump",
+    "latitude": 28.633935892049497,
+    "longitude": 77.21781114805783,
+    "site": "1-17"
+  },
+  {
+    "id": 42,
+    "indus_id":"IN-1337022",
+    "pole_no": 42,
+    "name": "Pole no. 44 BKS Marg Near Shivaji Stadium Metro Station",
+    "latitude": 28.628727132670257,
+    "longitude": 77.21095790669062,
+    "site": "2-5"
+  },
+  {
+    "id": 43,
+    "indus_id":"IN-1337694",
+    "pole_no": 43,
+    "name": "Pole no 5/6  Opposite Solar Tree Inner circle",
+    "latitude": 28.631892048315297, 
+    "longitude":  77.21897228829752,
+    "site": "1-12"
+  },
+  {
+    "id": 44,
+    "indus_id":"IN-1337695",
+    "pole_no": 44,
+    "name": "Pole No 15/16 Opposite D block Inner circle",
+    "latitude": 28.633744338369613,
+    "longitude": 77.22034808800437,
+    "site": "1-8"
+  },
+  {
+    "id": 45,
+    "indus_id":"IN-1336310",
+    "pole_no": 45,
+    "name": "Pole no. 3 Middle Circle Near Haldiram",
+    "latitude": 28.633739139928505,
+    "longitude": 77.22175771402725,
+    "site": "1-6"
+  },
+  {
+    "id": 46,
+    "indus_id":"IN-1341486",
+    "pole_no": 46,
+    "name": "Minto Bridge",
+    "latitude": 28.635461181448523,
+    "longitude": 77.22184915957476,
+    "site": "1-19"
+  },
+  {
+    "id": 47,
+    "indus_id":"IN-1337019",
+    "pole_no": 47,
+    "name": "Pole no. 19 BKS Marg Near Hanuman Mandir",
+    "latitude": 28.630246154460895, 
+    "longitude": 77.21422704894641,
+    "site": "2-2"
+  },
+  {
+    "id": 48,
+    "indus_id":"IN-1337026",
+    "pole_no": 48,
+    "name": "Pole no. 148 Janpath Road Near BSNL Office",
+    "latitude": 28.622466650937568, 
+    "longitude": 77.21915703645679,
+    "site": "3-2"
+  },
+  {
+    "id": 49,
+    "indus_id":"IN-1340606",
+    "pole_no": 49,
+    "name": "EP- 2 Barakhamba Road",
+    "latitude": 28.62898713507171,
+    "longitude": 77.2259911837871,
+    "site": "2-11"
+  },
+  {
+    "id": 50,
+    "indus_id":"IN-1342881",
+    "pole_no": 50,
+    "name": "Palika Kendra, near building entry gate",
+    "latitude": 28.62814488467186,
+    "longitude": 77.21557791646302,
+    "site": "2-18"
+  },
+  {
+    "id": 51,
+    "indus_id":"IN-1339901",
+    "pole_no": 51,
+    "name": "Pole no 64 opp maxmuller bhawan kasturba gandhi marg",
+    "latitude": 28.623832520783782,
+    "longitude": 77.22492177682143,
+    "site": "3-12"
+  },
+  {
+    "id": 52,
+    "indus_id":"IN-1340610",
+    "pole_no": 52,
+    "name": "Pole  No-35 Opposite Modern  School",
+    "latitude": 28.62740944338185,
+    "longitude": 77.22870944340119,
+    "site": "3-15"
+  },
+  {
+    "id": 53,
+    "indus_id":"IN-1340112",
+    "pole_no": 53,
+    "name": "Pole_krishna building tolstoy marg",
+    "latitude": 28.626134791988605,
+    "longitude": 77.22207799996347,
+    "site": "2-13"
+  }
+]

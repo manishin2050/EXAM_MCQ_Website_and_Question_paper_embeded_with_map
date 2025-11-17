@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehnova - Map</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Leaflet JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+
+
+    <style>
+        #map {
+            height: calc(100vh - 56px);
+            width: 100%;
+            margin-top: 56px;
+            z-index: 2;
+            background-color: transparent;
+        }
+
+        .custom-popup {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .search-results {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .leaflet-tile-pane {
+            transition: opacity 0.6s ease;
+        }
+    </style>
+</head>
+
+<body class="m-0 p-0 ">
+
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full bg-gray-800 text-white shadow-lg z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-start md:justify-center items-center">
+
+            <!-- Left Section -->
+            <select id="poleSelect"
+                class="hidden lg:block text-base text-black sm:text-lg mr-4 font-bold whitespace-nowrap w-[20vw] border border-gray-300 rounded-lg px-3 py-1 bg-white hover:shadow-md cursor-pointer">
+                <option class="text-black" selected>Loading poles...</option>
+            </select>
+
+            <!-- Middle Section -->
+            <div class="relative flex items-center gap-4 w-[70vw] lg:w-[50vw]">
+                <div class="flex-1 relative">
+                    <input id="searchBox" type="text" placeholder="Search pole/site/name..."
+                        class="w-full px-3 py-2 rounded text-black outline-none" />
+                    <div id="searchResults"
+                        class="absolute top-10  left-0 w-full bg-white text-black rounded shadow-lg hidden search-results">
+                    </div>
+                </div>
+
+                <button onclick="resetMap()" class="px-4 py-2 rounded-lg hidden lg:block  text-white text-base lg:text-lg
+               bg-indigo-600/90 hover:bg-indigo-600 active:bg-indigo-700
+               shadow-md shadow-indigo-600/20 transition duration-300">
+                    Reset Map
+                </button>
+                <button onclick="datacenterTickets()" class="px-4 py-2 rounded-lg hidden lg:block  text-white text-base lg:text-lg
+               bg-green-600/90 hover:bg-green-600 active:bg-green-700
+               shadow-md shadow-indigo-600/20 transition duration-300">
+                    Other Tickets
+                </button>
+                
+            </div>
+
+            <!-- Right Section -->
+            <span class="mr-0 inset absolute right-3 font-semibold font-arial lg:text-3xl text-base whitespace-nowrap">
+                <a target="_blank" href="https://my-porfolio-tau-nine.vercel.app/">@Manish</a>
+            </span>
+
+        </div>
+    </nav>
+
+
+    <!-- Map -->
+    <iframe id="iframe1"
+        src="https://maps.google.com/maps?ll=28.631562208651633,77.21960333877945&z=17&t=m&output=embed"
+        style="border:0;height: 100vh;width: 100vw;position: fixed;" allowfullscreen loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div id="map" class="mt-14"></div>
+
+<div id="form_data_1" class="hidden fixed inset-0 z-50 flex justify-center items-center bg-black/40 backdrop-blur-md rounded-lg " >
+<form id="ticketForm" onsubmit="this.querySelector('button[type=submit]').disabled = true;" class="mx-auto dark:bg-black bg-white rounded-lg p-10 "
+      method="POST" action="/mehnova_map">
+      {% csrf_token %}
+  <div id="channel_ticekt_plate" class="grid md:grid-cols-2 md:gap-6">
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="channel_no" id="channel_no" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+        <label for="channel_no" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Channel no.</label>
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="indus_id" id="indus_id" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+        <label for="indus_id" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Indus ID</label>
+    </div>
+  </div>
+  <div class="relative z-0 w-full mb-5 group">
+      <label for="ticket_id" class="dark:text-white">Ticket ID</label>
+      <br>
+      <!-- <input type="text" name="ticket_id" id="ticket_id" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required /> -->
+      <select id="ticket_id"  name="ticket_id" class="w-full border-2 border-blue-600 rounded-md " required></select>
+  </div>
+   <div class="relative z-0 w-full mb-5 group">
+      <label for="location" class="dark:text-white">Location</label>
+      <br>
+      <!-- <input type="text" name="ticket_id" id="ticket_id" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required /> -->
+      <select id="location" name="location" class="w-full border-2 border-blue-600 rounded-md" required></select>
+  </div>
+  <!-- <div class="relative z-0 w-full mb-5 group">
+      <input type="text" name="location" id="location" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+      <label for="location" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Location</label>
+  </div> -->
+  
+
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="alarm_generated_time" id="alram_gen_time" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="alram_gen_time" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alarm Generated Time</label>
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <input type="text" name="alarm_cleared_time" id="alarm_clear_time" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  />
+        <label for="alarm_clear_time" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Alarm Cleared Time</label>
+    </div>
+
+<div class="relative z-0 w-full mb-5 group">
+      <input type="text" name="rca" id="rca" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required placeholder=" "  />
+      <label for="rca" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">RCA</label>
+  </div>
+  <button type="submit" id="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+  <button type="button" onclick="form_data_1.classList.add('hidden')" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Close</button>
+</form>
+</div>
+    <script>
+        let map, polesData = [], markers = [];
+        const searchBox = document.getElementById("searchBox");
+        const searchResults = document.getElementById("searchResults");
+        const iframe1 = document.getElementById("iframe1");
+        let debounceTimeout;
+
+        // Initialize map
+        map = L.map('map').setView([28.631562208651633, 77.21960333877945], 17);
+
+        // Tile layer (transparent at start)
+        const tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            opacity: 0
+        }).addTo(map);
+
+
+        // Geocoder restricted to New Delhi region
+        const geocoder = L.Control.geocoder({
+            geocoder: L.Control.Geocoder.nominatim({
+                geocodingQueryParams: {
+                    countrycodes: "in",
+                    viewbox: [77.05, 28.80, 77.30, 28.50], // Restrict area to New Delhi
+                    bounded: 1
+                }
+            }),
+            placeholder: "Search place or coords (28.63, 77.22)",
+            defaultMarkGeocode: true
+        })
+            .on('markgeocode', function (e) {
+                const latlng = e.geocode.center;
+                showLocation(latlng, e.geocode.name);
+            })
+            .addTo(map);
+
+        // 🧠 Custom handler for both text & coordinate input
+        const input = document.querySelector('.leaflet-control-geocoder-form input');
+
+        input.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = input.value.trim();
+
+                // ✅ If user entered coordinates like "28.63, 77.22"
+                const coordMatch = query.match(/^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$/);
+                if (coordMatch) {
+                    const lat = parseFloat(coordMatch[1]);
+                    const lng = parseFloat(coordMatch[3]);
+                    const latlng = L.latLng(lat, lng);
+                    showLocation(latlng, `Coordinates: ${lat.toFixed(5)}, ${lng.toFixed(5)}`);
+                }
+            }
+        });
+
+        // 📍 Function to show popup & center map
+        function showLocation(latlng, name) {
+            map.setView(latlng, 18);
+            L.popup()
+                .setLatLng(latlng)
+                .setContent(`<strong>${name}</strong><br>Lat: ${latlng.lat.toFixed(5)}<br>Lng: ${latlng.lng.toFixed(5)}`)
+                .openOn(map);
+            if (input) input.value = '';
+        }
+        // Function to update coordinates and iframe
+        function updateCoords() {
+            const center = map.getCenter();
+            const z = map.getZoom();
+
+            iframe1.src = `https://maps.google.com/maps?ll=${center.lat},${center.lng}&z=${z}&t=m&output=embed`;
+
+
+        }
+
+        // When user moves the map (start moving)
+        map.on('movestart', () => {
+            tileLayer.setOpacity(1); // Show map layer
+        });
+
+        // When movement ends
+        map.on('moveend', () => {
+            // Smooth fade out after short delay
+            setTimeout(() => {
+                tileLayer.setOpacity(0);
+            }, 600); // 0.6s delay before hiding
+            updateCoords();
+        });
+
+        const redIcon = new L.Icon({
+            iconUrl: "https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi3.png",
+            shadowUrl: 'https://unpkg.com/leaflet/dist/images/marker-shadow.png',
+            iconSize: [30, 41],
+            iconAnchor: [12, 0],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+
+        // Load poles.json data
+        fetch('/static/poles.json')
+            .then(response => response.json())
+            .then(data => {
+                polesData = data;
+                data.forEach(pole => {
+                    const marker = L.marker([pole.latitude, pole.longitude], { icon: redIcon }).addTo(map);
+
+                    marker.bindTooltip(
+                        `<div class="bg-gray-200 px-1 font-bold">#${pole.pole_no} | ${pole.site}</div>`,
+                        { permanent: true, direction: "right", offset: [1, 12] }
+                    ).openTooltip();
+
+                    // Popup with Copy Button (no inline onclick here)
+                    marker.bindPopup(`
+        <div class="custom-popup">
+          <strong>Channel No:</strong> ${pole.pole_no}<br>
+          <strong>Site:</strong> ${pole.site}<br>
+          <strong>Name:</strong> ${pole.name}<br><br>
+          <button id="copyBtn-${pole.id}"
+            class="mt-2 px-3 py-1 bg-indigo-600 text-white rounded text-sm ">
+            📋 Ticket
+          </button>
+       <a href="https://www.google.com/maps/place/${pole.latitude},${pole.longitude}/@${pole.latitude},${pole.longitude},17z/data=!3d${pole.latitude}!4d${pole.longitude}" target="_blank"
+            class="mt-2 px-3 py-2 bg-red-600 text-white  rounded text-sm ">
+            <span class="text-white" >🧭 GO </span>
+          </a>
+        </div>
+      `, { offset: [0, 50] });
+
+                    // Attach click event when popup opens
+                    marker.on("popupopen", () => {
+                        const btn = document.getElementById(`copyBtn-${pole.id}`);
+                        const formDiv = document.getElementById(`form_data_1`);
+                        if (btn) {
+                            btn.addEventListener("click", () => {
+                                copyToClipboard(pole);
+                                btn.classList.remove("bg-indigo-600", "hover:bg-indigo-700");
+                                btn.classList.add("bg-green-600", "hover:bg-green-700");
+                                formDiv.classList.remove("hidden");
+                                 channel_ticekt_plate.classList.remove('hidden');
+                                // Text bhi change karna chaho to:
+                                btn.textContent = "✅ form!";
+
+                                // 3 sec baad wapas normal kar do
+                                setTimeout(() => {
+                                    btn.classList.remove("bg-green-600", "hover:bg-green-700");
+                                    btn.classList.add("bg-indigo-600", "hover:bg-indigo-700");
+                                    btn.textContent = "📋 Ticket";
+                                }, 3000);
+                            });
+                        }
+                    });
+
+                    markers.push({ ...pole, marker });
+                });
+            });
+        // Helper function to format date like 30/04/2025 3:19:16 PM
+        function getCurrentDateTime() {
+            const now = new Date();
+            return now.toLocaleString("en-GB", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true
+            });
+        }
+
+function getFutureDateTime() {
+    const now = new Date();
+
+    // Add random 3–5 hours, 10–50 minutes, and 10–50 seconds
+    const addHours = Math.floor(Math.random() * 3) + 3;     // 3–5 hours
+    const addMinutes = Math.floor(Math.random() * 41) + 10; // 10–50 mins
+    const addSeconds = Math.floor(Math.random() * 20) + 10; // 10–50 secs
+
+    now.setHours(now.getHours() + addHours);
+    now.setMinutes(now.getMinutes() + addMinutes);
+    now.setSeconds(now.getSeconds() + addSeconds);
+
+    return now.toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+    });
+}
+
+            function copyToClipboard(pole) {
+            const currentTime = getCurrentDateTime().toLocaleUpperCase();
+            
+            const channel_no =document.getElementById('channel_no');
+            const indus_id= document.getElementById('indus_id');
+            // const ticket_id= document.getElementById('ticket_id');
+            const location= document.getElementById('location');
+            const alarm_generated_time= document.getElementById('alram_gen_time');
+            const alarm_cleared_time= document.getElementById('alarm_clear_time');
+            const rca= document.getElementById('rca');
+            renderCategoryOptions();
+
+            channel_no.value=pole.pole_no;
+            indus_id.value=pole.indus_id;
+            // ticket_id.value='NDMC_Tele 272';
+            // locations.innerHTML=pole.name;
+            locations.innerHTML=`<option value="${pole.name}">${pole.name} </option>`;
+            alarm_generated_time.value=currentTime;
+            alarm_cleared_time.value=getFutureDateTime().toLocaleUpperCase();
+            // rca.value='unreachble site';
+            
+            showToast("Form opened ✅");
+        }
+
+        // Optional toast for user feedback
+        function showToast(msg) {
+            const toast = document.createElement("div");
+            toast.textContent = msg;
+            toast.className = "fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded shadow-lg z-50";
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+        // Load poles into dropdown
+        async function loadPoles() {
+            try {
+                // Static path (adjust if needed)
+                const response = await fetch('/static/poles.json');
+                const data = await response.json();
+
+                const select = document.getElementById('poleSelect');
+                select.innerHTML = '<option disabled selected>Select a Pole</option>';
+
+                // Add poles to dropdown
+                data.forEach(pole => {
+                    const opt = document.createElement('option');
+                    opt.value = pole.id;
+                    opt.textContent = pole.id + ".  "+ pole.name;
+                    select.appendChild(opt);
+                });
+
+                // On change event
+                select.addEventListener('change', e => {
+                    // console.log(e.value);
+                    const selectedPole = data.find(p => p.id == e.target.value);
+                    if (selectedPole) {
+                        focusOnPole(selectedPole.id);
+
+                        // ✅ Reset dropdown to default
+                        setTimeout(() => {
+                        select.value = "Select a Pole"; // resets to default
+                }, 500);
+            }
+                });
+
+            } catch (error) {
+                console.error('Error loading poles.json:', error);
+                document.getElementById('poleSelect').innerHTML = '<option disabled>Error loading poles</option>';
+            }
+        }
+
+        // Load on page load
+        document.addEventListener('DOMContentLoaded', loadPoles);
+
+
+        // Search function with debounce
+        searchBox.addEventListener("input", () => {
+            clearTimeout(debounceTimeout);
+            debounceTimeout = setTimeout(() => {
+                const query = searchBox.value.toLowerCase();
+                if (!query) {
+                    searchResults.classList.add("hidden");
+                    return;
+                }
+                const results = polesData.filter(pole =>
+                    pole.pole_no.toString().includes(query) ||
+                    pole.site.toLowerCase().includes(query) ||
+                    pole.name.toLowerCase().includes(query)
+                );
+                displayResults(results);
+            }, 300);
+        });
+
+        function displayResults(results) {
+            if (results.length === 0) {
+                searchResults.innerHTML = `<div class="px-3 py-2 text-gray-500">No results found</div>`;
+            } else {
+                searchResults.innerHTML = results.map(r => `
+          <div class="px-3 py-2 hover:bg-gray-200 cursor-pointer" onclick="focusOnPole(${r.id})">
+            <strong>#${r.pole_no}</strong> - ${r.site} (${r.name})
+          </div>
+        `).join("");
+            }
+            searchResults.classList.remove("hidden");
+        }
+
+        // Focus map on searched pole
+        window.focusOnPole = (id) => {
+            const pole = markers.find(m => m.id === id);
+            if (pole) {
+                map.setView([pole.latitude, pole.longitude], 17, { animate: true, duration: 0.6 });
+                pole.marker.openPopup();
+                searchResults.classList.add("hidden");
+                searchBox.value = "";
+            }
+        };
+
+        // Reset Map
+        function resetMap() {
+            map.setView([28.631562208651633, 77.21960333877945], 17,
+                { animate: true, duration: 0.6 });
+        }
+
+    // Default counters
+    const defaultTickets = {
+      NDMC_ALARM: 612,
+      NDMC_CCTV: 453,
+      NDMC_TELE: 765,
+      NDMC_ALL:1232,
+      NDMC_WIFI:345,
+      NDMC_:202
+    };
+
+    // Load from localStorage or use default
+    let counters = JSON.parse(localStorage.getItem("ticketCounters")) || defaultTickets;
+    localStorage.setItem("ticketCounters", JSON.stringify(counters));
+
+    const select = document.getElementById("ticket_id");
+    const locations = document.getElementById("location");
+
+    // Function to render dropdown options
+    function renderCategoryOptions() {
+      select.innerHTML = `<option value="">--Select--</option>`;
+      for (const [key, value] of Object.entries(counters)) {
+        if (key.trim() === "" || key.toUpperCase() === "NDMC_") continue;
+        // const label = key.replace("ndmc_", "NDMC ").toUpperCase();
+        // const label = key.toUpperCase();
+        select.innerHTML += `<option value="${key} ${value + 1}">${key} ${value + 1}</option>`;
+      }
+      
+    }
+
+    
+    // Handle form submission
+    document.getElementById("ticketForm").addEventListener("submit", function (e) {
+    //   e.preventDefault();
+
+      const category = select.value.split(" ")[0];
+    //   const issue = document.getElementById("issue").value.trim();
+
+   
+    // console.log(category)
+      // Load counters again
+      counters = JSON.parse(localStorage.getItem("ticketCounters"));
+
+      // Generate and increment
+      const ticketNumber = counters[category] + 1;
+      counters[category] = ticketNumber;
+    //   console.log(counters)
+
+      // Save updated counters
+      localStorage.setItem("ticketCounters", JSON.stringify(counters));
+    });
+
+
+    function datacenterTickets(){
+        channel_ticekt_plate.classList.add('hidden');
+        indus_id.value='';
+        // location.innerHTML='jai ho ji';
+        alarm_clear_time.value=getFutureDateTime().toLocaleUpperCase();
+        select.innerHTML = `<option value="NDMC_ 00${counters["NDMC_"]+1}">NDMC_ 00${counters["NDMC_"]+1} </option>`;
+        alram_gen_time.value=getCurrentDateTime().toLocaleUpperCase();
+        form_data_1.classList.remove("hidden");
+        ticketForm.classList.add("w-[30vw]");
+        ticket_locations=["NDMC Data center","L&T data center","Indus data center "]
+        locations.innerHTML = `<option value="">--Select--</option>`;
+        for (const i in ticket_locations) {
+            locations.innerHTML += `<option value="${ticket_locations[i]}">${ticket_locations[i]} </option>`;
+            
+        }
+    
+    }
+    renderCategoryOptions();
+
+    // other ticket system
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+    font-family: Tahoma;
+}
+body{
+    height:100%;
+    width:100%;
+
+}
+.question {
+    margin-bottom: 20px;
+  }
+.options {
+    margin-left: 6px;
+  }
+
+
+.mcq input[type="radio"]:checked{
+  accent-color: green;
+}
+#ans{
+  color: green;
+  font-weight: bold;
+}
+.box{
+  background: #ffffff;
+  /* position: relative; */
+  min-height: 100vh;
+  width: 100%;
+  border: 2px solid green;
+  box-shadow: inset 0 0 10px black, 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  /* filter: blur(10px); */
+}
+
+#downloadQuestionPaper{
+  background-color: aquamarine;
+}

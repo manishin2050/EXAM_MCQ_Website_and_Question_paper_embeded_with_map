@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PDF Viewer with Text Extraction</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        display: flex;
+        height: 80vh;
+      }
+      .left,
+      .right {
+        width: 50%;
+        padding: 10px;
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .bottom {
+        padding: 10px;
+        border-top: 1px solid #ccc;
+      }
+      textarea {
+        width: 100%;
+        height: 150px;
+        font-family: monospace;
+      }
+      .copy-btn {
+        margin-top: 10px;
+        padding: 5px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- PDF View -->
+      <div class="left">
+        <h2>Select a PDF to view</h2>
+        <input type="file" id="pdfInput" accept="application/pdf" />
+
+        <br /><br />
+        <iframe id="pdfViewer"></iframe>
+        <!-- <iframe src="{{ pdf_url }}"></iframe> -->
+      </div>
+
+      <!-- Extracted Text View -->
+      <div class="right">
+        <h3>Extracted Text</h3>
+        <pre id="extractedText"></pre>
+        <button class="copy-btn" onclick="copyToTextarea()">
+          Copy to Textarea
+        </button>
+      </div>
+    </div>
+
+    <!-- Textarea Section -->
+    <div class="bottom">
+      <h3>Editable Text Area</h3>
+      <form method="post">
+        {% csrf_token %}
+        <textarea name="final_text" id="finalTextArea"></textarea>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("pdfInput")
+        .addEventListener("change", function (event) {
+          const file = event.target.files[0];
+          if (file && file.type === "application/pdf") {
+            const fileURL = URL.createObjectURL(file);
+            document.getElementById("pdfViewer").src = fileURL;
+          } else {
+            alert("Please select a valid PDF file.");
+          }
+        });
+
+      const pdfInput = document.getElementById("pdfInput");
+      const pdfViewer = document.getElementById("pdfViewer");
+      const pdfText = document.getElementById("extractedText");
+
+      pdfInput.addEventListener("change", async function () {
+        const file = pdfInput.files[0];
+        if (file && file.type === "application/pdf") {
+          const fileURL = URL.createObjectURL(file);
+          pdfViewer.src = fileURL;
+
+          const arrayBuffer = await file.arrayBuffer();
+
+          const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+          let finalText = "";
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+
+            // Organize items by line using Y-coordinate
+            let linesMap = {};
+            content.items.forEach((item) => {
+              const y = Math.round(item.transform[5]); // vertical position
+              if (!linesMap[y]) linesMap[y] = [];
+              linesMap[y].push(item.str);
+            });
+
+            // Sort lines by Y position (top to bottom)
+            const sortedLines = Object.keys(linesMap)
+              .sort((a, b) => b - a) // descending: top of page first
+              .map((y) => linesMap[y].join(" "));
+
+            finalText += `Page ${i}:\n` + sortedLines.join("\n") + "\n\n";
+          }
+
+          output.textContent = finalText;
+        }
+      });
+    </script>
+    <script>
+      function copyToTextarea() {
+        const text = document.getElementById("extractedText").innerText;
+        document.getElementById("finalTextArea").value = text;
+      }
+    </script>
+  </body>
+</html>
